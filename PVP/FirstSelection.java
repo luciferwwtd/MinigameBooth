@@ -1,6 +1,8 @@
 package PVP;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,20 +12,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.util.Random;
-
-public class SecondWindow extends JFrame implements ActionListener {
+public class FirstSelection extends JFrame implements ActionListener {
 	JFrame frame = new JFrame();
 	
-	JLabel label = new JLabel("Choose Character!"); // 전과의 버튼과 마찬가지로 이렇게 하면 label의 텍스트를 간편하게 설정할 수 있다.
+	JLabel label = new JLabel("P1의 캐릭터를 선택하세요!"); // 전과의 버튼과 마찬가지로 이렇게 하면 label의 텍스트를 간편하게 설정할 수 있다.
 	JButton godChangSup;
 	JButton meow;
+	JButton ping;
 	JButton faker;
+	JButton domain;
 	JButton steve;
 	JButton gay;
 	JButton random;
 	
-	SecondWindow() {
+	FirstSelection() {
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((screen.getWidth() - getWidth()) /2) - 335;
+		int y = (int) ((screen.getHeight() -getHeight()) /2) - 310;
+		frame.setLocation(x, y);
+		
 		label.setBounds(200, 10, 250, 100);
 		label.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
 		label.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
@@ -59,8 +66,21 @@ public class SecondWindow extends JFrame implements ActionListener {
 		meow.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
 		meow.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
 		
+		ping = new JButton(); // 새로운 JButton 생성
+		ping.setBounds(70, 300, 250, 100); // 버튼의 크기 설정
+		ping.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
+		ping.setText("하츄핑"); // 버튼의 텍스트 설정
+		ping.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
+		ping.setHorizontalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수평 방향으로 버튼의 중앙(CENTER)에 정렬
+		ping.setVerticalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수직 방향으로 버튼의 중앙(CENTER)에 정렬
+		ping.setIconTextGap(-15); // 버튼에서 텍스트와 아이콘의 간격을 설정. 음수로 설정하면 가까워지고 양수로 설정하면 멀어진다.
+		ping.setForeground(Color.BLACK); // 버튼의 텍스트의 색깔을 설정한다.
+		ping.setBackground(Color.PINK); // 버튼의 색깔을 설정한다.
+		ping.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
+		ping.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
+		
 		faker = new JButton(); // 새로운 JButton 생성
-		faker.setBounds(70, 300, 250, 100); // 버튼의 크기 설정
+		faker.setBounds(70, 400, 250, 100); // 버튼의 크기 설정
 		faker.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
 		faker.setText("페이커"); // 버튼의 텍스트 설정
 		faker.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
@@ -72,8 +92,21 @@ public class SecondWindow extends JFrame implements ActionListener {
 		faker.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
 		faker.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
 		
+		domain = new JButton(); // 새로운 JButton 생성
+		domain.setBounds(320, 100, 250, 100); // 버튼의 크기 설정
+		domain.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
+		domain.setText("백종원"); // 버튼의 텍스트 설정
+		domain.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
+		domain.setHorizontalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수평 방향으로 버튼의 중앙(CENTER)에 정렬
+		domain.setVerticalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수직 방향으로 버튼의 중앙(CENTER)에 정렬
+		domain.setIconTextGap(-15); // 버튼에서 텍스트와 아이콘의 간격을 설정. 음수로 설정하면 가까워지고 양수로 설정하면 멀어진다.
+		domain.setForeground(Color.WHITE); // 버튼의 텍스트의 색깔을 설정한다.
+		domain.setBackground(Color.BLACK); // 버튼의 색깔을 설정한다.
+		domain.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
+		domain.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
+		
 		steve = new JButton(); // 새로운 JButton 생성
-		steve.setBounds(320, 100, 250, 100); // 버튼의 크기 설정
+		steve.setBounds(320, 200, 250, 100); // 버튼의 크기 설정
 		steve.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
 		steve.setText("스티브"); // 버튼의 텍스트 설정
 		steve.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
@@ -85,21 +118,8 @@ public class SecondWindow extends JFrame implements ActionListener {
 		steve.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
 		steve.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
 		
-//		gay = new JButton(); // 새로운 JButton 생성
-//		gay.setBounds(320, 200, 250, 100); // 버튼의 크기 설정
-//		gay.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
-//		gay.setText("GAY(랜덤으로 돌릴 시 50%로 선택 가능)"); // 버튼의 텍스트 설정
-//		gay.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
-//		gay.setHorizontalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수평 방향으로 버튼의 중앙(CENTER)에 정렬
-//		gay.setVerticalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수직 방향으로 버튼의 중앙(CENTER)에 정렬
-//		gay.setIconTextGap(-15); // 버튼에서 텍스트와 아이콘의 간격을 설정. 음수로 설정하면 가까워지고 양수로 설정하면 멀어진다.
-//		gay.setForeground(Color.BLACK); // 버튼의 텍스트의 색깔을 설정한다.
-//		gay.setBackground(Color.PINK); // 버튼의 색깔을 설정한다.
-//		gay.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
-//		gay.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
-		
 		random = new JButton(); // 새로운 JButton 생성
-		random.setBounds(320, 200, 250, 100); // 버튼의 크기 설정
+		random.setBounds(320, 300, 250, 100); // 버튼의 크기 설정
 		random.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
 		random.setText("랜덤 선택"); // 버튼의 텍스트 설정
 		random.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
@@ -115,13 +135,15 @@ public class SecondWindow extends JFrame implements ActionListener {
 		frame.add(label);
 		frame.add(godChangSup);
 		frame.add(meow);
+		frame.add(ping);
 		frame.add(faker);
+		frame.add(domain);
 		frame.add(steve);
-//		frame.add(gay);
 		frame.add(random);
 		
+		frame.setTitle("P1 Selection");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(670, 520);
+		frame.setSize(670, 620);
 		frame.setLayout(null);
 		frame.setVisible(true);
 	}
@@ -129,41 +151,59 @@ public class SecondWindow extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==godChangSup) {
-			System.out.println("신창섭");
-		}
-		if(e.getSource()==meow) {
-			System.out.println("애용이");
-		}
-		if(e.getSource()==faker) {
-			System.out.println("페이커");
-		}
-		if(e.getSource()==steve) {
-			System.out.println("스티브");
-		}
-		if(e.getSource()==steve) {
-			System.out.println("스티브");
-		}
-//		if(e.getSource()==steve) {
-//			System.out.println("GAY");
-//		}
-		if(e.getSource()==random) {
-			//
-			int value = (int) (Math.random() * 10) + 1;
-//			System.out.println(value);
+			JOptionPane.showMessageDialog(null, "신 창 섭이 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("신창섭");
+		} else if(e.getSource()==meow) {
+			JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("애용이");
+		} else if(e.getSource()==ping) {
+			JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("하츄핑");
+		} else if(e.getSource()==faker) {
+			JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("페이커");
+		} else if(e.getSource()==domain) {
+			JOptionPane.showMessageDialog(null, "백종원이 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("백종원");
+		} else if(e.getSource()==steve) {
+			JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+			frame.dispose();
+			SecondSelection secondSelection = new SecondSelection("스티브");
+		} else if(e.getSource()==random) {
+			int value = (int) (Math.random() * 12) + 1;
 			if(value < 7) {
-				JOptionPane.showMessageDialog(null, "GAY \n GAY \n GAY \n GAY \n GAY");
-			}
-			if(value == 7) {
-				JOptionPane.showMessageDialog(null, "신 창 섭");
-			}
-			if(value == 8) {
-				JOptionPane.showMessageDialog(null, "애용이");
-			}
-			if(value == 9) {
-				JOptionPane.showMessageDialog(null, "FAKER");
-			}
-			if(value == 10) {
-				JOptionPane.showMessageDialog(null, "I, AM STEVE.Y");
+				JOptionPane.showMessageDialog(null, "게이가 선택ㅋㅋ되었습니다ㅋㅋㅋㅋ");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("게이");
+			} else if(value == 7) {
+				JOptionPane.showMessageDialog(null, "신 창 섭이 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("신창섭");
+			} else if(value == 8) {
+				JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("애용이");
+			} else if(value == 9) {
+				JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("하츄핑");
+			} else if(value == 10) {
+				JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("페이커");
+			} else if(value == 11) {
+				JOptionPane.showMessageDialog(null, "백종원이 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("백종원");
+			} else if(value == 12) {
+				JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+				frame.dispose();
+				SecondSelection secondSelection = new SecondSelection("스티브");
 			}
 			
 		}
