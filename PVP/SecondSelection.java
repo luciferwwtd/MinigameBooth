@@ -172,7 +172,7 @@ public class SecondSelection extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		i = 0;
-		System.out.println(character);
+//		System.out.println(character);
 		if(e.getSource()==godChangSup) {
 			JOptionPane.showMessageDialog(null, "신 창 섭이 선택되었습니다!");
 			frame.dispose();
