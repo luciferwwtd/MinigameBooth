@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +18,11 @@ public class MyFrame extends JFrame implements ActionListener {
 	JLabel label;
 	
 	MyFrame(){
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((screen.getWidth() - getWidth()) /2) - 250;
+		int y = (int) ((screen.getHeight() -getHeight()) /2) - 150;
+		this.setLocation(x, y);
+		
 		button = new JButton(); // 새로운 JButton 생성
 		button.setBounds(110, 100, 250, 100); // 버튼의 크기 설정
 		button.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
@@ -54,7 +61,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==button) {
 			this.dispose();
-			SecondWindow secondWindow = new SecondWindow(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
+			FirstSelection firstSelection = new FirstSelection(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
 		}
 	}
 }
