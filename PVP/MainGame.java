@@ -19,25 +19,20 @@ import PVP.MoveThread;
 public class MainGame extends JFrame implements KeyListener, Runnable {
 	public JFrame frame = new JFrame();
 	
-	public JLabel p1;
-	public JLabel p2;
+	public JLabel p1, p2, riceKeyP1, riceKeyP2;
 	
 	public boolean P1onGround;
 	public boolean P2onGround;
 	public int P1HP;
 	public int P2HP;
-	public int speed;
-	public int P1x;
-	public int P1y;
-	public int P1z;
-	public int P2x;
-	public int P2y;
-	public int P2z;
+	public int monkeyStackP1, monkeyStackP2 = 0;
 	
 	public int FPS = 60;
 	
-	public boolean P1upPressed, P1downPressed, P1leftPressed, P1rightPressed;
-	public boolean P2upPressed, P2downPressed, P2leftPressed, P2rightPressed;
+	public boolean P1upPressed, P1downPressed, P1leftPressed, P1rightPressed, P1attackPressed, P1faceLeft;
+	public boolean P2upPressed, P2downPressed, P2leftPressed, P2rightPressed, P2attackPressed, P2faceLeft;
+	
+	public String class1, class2;
 	
 	MainGame() {
 		
@@ -46,6 +41,14 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 	MainGame(String character1, String character2) {
 		p1 = new JLabel();
 		p2 = new JLabel();
+		riceKeyP1 = new JLabel();
+		riceKeyP2 = new JLabel();
+		
+		P1faceLeft = false;
+		P2faceLeft = true;
+		
+		class1 = character1;
+		class2 = character2;
 		
 		p1.setBounds(0, 785, 130, 200); // -235
 		p1.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
@@ -67,11 +70,35 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		p2.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
 		p2.setEnabled(true);
 		
+		riceKeyP1.setBounds(0, 0, 100, 100);
+		riceKeyP1.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		riceKeyP1.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		riceKeyP1.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		riceKeyP1.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		riceKeyP1.setOpaque(true); // 배경색을 적용시킨다.
+		riceKeyP1.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		riceKeyP1.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		riceKeyP1.setEnabled(true);
+		riceKeyP1.setVisible(false);
+		
+		riceKeyP2.setBounds(0, 0, 100, 100);
+		riceKeyP2.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		riceKeyP2.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		riceKeyP2.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		riceKeyP2.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		riceKeyP2.setOpaque(true); // 배경색을 적용시킨다.
+		riceKeyP2.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		riceKeyP2.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		riceKeyP2.setEnabled(true);
+		riceKeyP2.setVisible(false);
+		
 		p1.setBackground(Color.green);
 		p2.setBackground(Color.blue);
+		riceKeyP1.setBackground(Color.red);
 		
 		frame.add(p1);
 		frame.add(p2);
+		frame.add(riceKeyP1);
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((screen.getWidth() - getWidth()) /2) - 900;
@@ -112,9 +139,14 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		}
 		if(code == KeyEvent.VK_A) {
 			P1leftPressed = true;
+			P1faceLeft = true;
 		}
 		if(code == KeyEvent.VK_D) {
 			P1rightPressed = true;
+			P1faceLeft = false;
+		}
+		if(code == KeyEvent.VK_E) {
+			P1attackPressed = true;
 		}
 		
 		if(code == KeyEvent.VK_UP) {
@@ -125,9 +157,14 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		}
 		if(code == KeyEvent.VK_LEFT) {
 			P2leftPressed = true;
+			P2faceLeft = true;
 		}
 		if(code == KeyEvent.VK_RIGHT) {
 			P2rightPressed = true;
+			P2faceLeft = false;
+		}
+		if(code == KeyEvent.VK_SHIFT) {
+			P2attackPressed = true;
 		}
 	}
 
@@ -147,6 +184,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		if(code == KeyEvent.VK_D) {
 			P1rightPressed = false;
 		}
+		if(code == KeyEvent.VK_E) {
+			P1attackPressed = false;
+		}
 		
 		if(code == KeyEvent.VK_UP) {
 			P2upPressed = false;
@@ -160,6 +200,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		if(code == KeyEvent.VK_RIGHT) {
 			P2rightPressed = false;
 		}
+		if(code == KeyEvent.VK_SHIFT) {
+			P2attackPressed = false;
+		}
 	}
 
 	@Override
@@ -170,6 +213,8 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		long currentTime;
 		long timer = 0;
 		int drawCount = 0;
+		MoveThread moveThread = new MoveThread();
+		Attack attack = new Attack();
 		
 		while(frame != null) {
 			currentTime = System.nanoTime();
@@ -183,7 +228,8 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 //			System.out.println(lastTime+"lastTimer");
 			
 			if(delta >= 1) {
-				MoveThread.move(this);
+				moveThread.move(this, moveThread);
+				attack.attack(this, class1, class2, attack);
 				delta--;
 				drawCount++;
 			}
