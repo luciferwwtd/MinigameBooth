@@ -16,8 +16,6 @@ import javax.swing.JOptionPane;
 
 import PVP.MoveThread;
 
-import Dodge.KeyHandler;
-
 public class MainGame extends JFrame implements KeyListener, Runnable {
 	public JFrame frame = new JFrame();
 	
@@ -179,6 +177,10 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 			delta += (currentTime - lastTime) / drawInterval;
 			timer += (currentTime - lastTime);
 			lastTime = currentTime;
+			
+//			System.out.println(delta+"delta");
+//			System.out.println(timer+"timer");
+//			System.out.println(lastTime+"lastTimer");
 			
 			if(delta >= 1) {
 				MoveThread.move(this);
