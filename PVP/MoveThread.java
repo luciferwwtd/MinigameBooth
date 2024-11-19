@@ -8,56 +8,22 @@ public class MoveThread extends Thread {
 	public static boolean upPressingP2 = false;
 	static MainGame mainGame;
 	
-	public static void P1Jump() {
-MainGame main = mainGame;
-		
-		double drawInterval = 1000000000/60;
-		double delta = 0;
-		long lastTime = System.nanoTime();
-		long currentTime;
-		long timer = 0;
-		
-		double time = 0;
-		int passedFrame = 0;
-		
-		int drawCount = 0;
-		
-		while(passedFrame < 60) {
-			currentTime = System.nanoTime();
-			
-			delta += (currentTime - lastTime) / drawInterval;
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
-			
-			if(delta >= 1) {
-				passedFrame += 1;
-				delta--;
-				drawCount++;
-				
-				main.p1.setLocation(main.p1.getX(), 785 + (1200*passedFrame/60*passedFrame/60) - (1200*passedFrame/60));
-			}
-			
-			if(timer >= 1000000000) {
-//				System.out.println("FPS:" + drawCount);
-				drawCount = 0;
-				timer = 0;
-			}
-		}
-		
-		main.p1.setLocation(main.p1.getX(), 785);
+	public static void P1UpPressOff() {
+		upPressingP1 = false;
 	}
 	
-	public void run() {  // Thread 를 상속하면 run 메서드를 구현해야 한다.
-		
-    }	
+	public static void P2UpPressOff() {
+		upPressingP2 = false;
+	}
 	
-	public static void move(MainGame main) {
+	public static void move(MainGame main, MoveThread moveThread) {
 		if(main.P1upPressed == true && upPressingP1 == false) {
 			upPressingP1 = true;
 			mainGame = main;
 			
-			MoveThread sample = new MoveThread();
-	        sample.start();
+			P1Jump p1Jump = new P1Jump();
+			p1Jump.getMain(mainGame, upPressingP1, moveThread);
+			p1Jump.start();
 		}
 		if(main.P1rightPressed == true) {
 			if(main.p1.getX() >= 1653) {	
@@ -78,8 +44,9 @@ MainGame main = mainGame;
 			upPressingP2 = true;
 			mainGame = main;
 			
-			MoveThread sample = new MoveThread();
-	        sample.start();
+			P2Jump p2Jump = new P2Jump();
+			p2Jump.getMain(mainGame, upPressingP2, moveThread);
+			p2Jump.start();
 		}
 		if(main.P2rightPressed == true) {
 			if(main.p2.getX() >= 1653) {
@@ -97,38 +64,3 @@ MainGame main = mainGame;
 		}
 	}
 }
-
-/*
-double drawInterval = 1000000000/60;
-			double delta = 0;
-			long lastTime = System.nanoTime();
-			long currentTime;
-			long timer = 0;
-			
-			double time = 0;
-			int passedFrame = 0;
-			
-			int drawCount = 0;
-			
-			while(passedFrame < 60) {
-				currentTime = System.nanoTime();
-				
-				delta += (currentTime - lastTime) / drawInterval;
-				timer += (currentTime - lastTime);
-				lastTime = currentTime;
-				
-				if(delta >= 1) {
-					passedFrame += 1;
-					delta--;
-					drawCount++;
-					
-					main.p1.setLocation(main.p1.getX(), 785 + (1200*passedFrame/60*passedFrame/60) - (1200*passedFrame/60));
-				}
-				
-				if(timer >= 1000000000) {
-//					System.out.println("FPS:" + drawCount);
-					drawCount = 0;
-					timer = 0;
-				}
-			}
- */
