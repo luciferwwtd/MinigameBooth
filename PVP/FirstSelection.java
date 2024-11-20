@@ -134,11 +134,11 @@ public class FirstSelection extends JFrame implements ActionListener {
 		
 		frame.add(label);
 		frame.add(godChangSup);
-		frame.add(meow);
-		frame.add(ping);
+//		frame.add(meow);
+//		frame.add(ping);
 		frame.add(faker);
 		frame.add(domain);
-		frame.add(steve);
+//		frame.add(steve);
 		frame.add(random);
 		
 		frame.setTitle("P1 Selection");
@@ -147,7 +147,7 @@ public class FirstSelection extends JFrame implements ActionListener {
 		frame.setLayout(null);
 		frame.setVisible(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==godChangSup) {
@@ -185,13 +185,21 @@ public class FirstSelection extends JFrame implements ActionListener {
 				frame.dispose();
 				SecondSelection secondSelection = new SecondSelection("신창섭");
 			} else if(value == 8) {
-				JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+//				JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+//				frame.dispose();
+//				SecondSelection secondSelection = new SecondSelection("애용이");
+				
+				JOptionPane.showMessageDialog(null, "신 창 섭이 선택되었습니다!");
 				frame.dispose();
-				SecondSelection secondSelection = new SecondSelection("애용이");
+				SecondSelection secondSelection = new SecondSelection("신창섭");
 			} else if(value == 9) {
-				JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+//				JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+//				frame.dispose();
+//				SecondSelection secondSelection = new SecondSelection("하츄핑");
+				
+				JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
 				frame.dispose();
-				SecondSelection secondSelection = new SecondSelection("하츄핑");
+				SecondSelection secondSelection = new SecondSelection("페이커");
 			} else if(value == 10) {
 				JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
 				frame.dispose();
@@ -201,9 +209,13 @@ public class FirstSelection extends JFrame implements ActionListener {
 				frame.dispose();
 				SecondSelection secondSelection = new SecondSelection("백종원");
 			} else if(value == 12) {
-				JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+//				JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+//				frame.dispose();
+//				SecondSelection secondSelection = new SecondSelection("스티브");
+				
+				JOptionPane.showMessageDialog(null, "백종원이 선택되었습니다!");
 				frame.dispose();
-				SecondSelection secondSelection = new SecondSelection("스티브");
+				SecondSelection secondSelection = new SecondSelection("백종원");
 			}
 			
 		}
