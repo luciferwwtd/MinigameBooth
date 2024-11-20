@@ -142,11 +142,11 @@ public class SecondSelection extends JFrame implements ActionListener {
 		
 		frame.add(label);
 		frame.add(godChangSup);
-		frame.add(meow);
-		frame.add(ping);
+//		frame.add(meow);
+//		frame.add(ping);
 		frame.add(faker);
 		frame.add(domain);
-		frame.add(steve);
+//		frame.add(steve);
 		frame.add(random);
 		
 		if(character == "신창섭") {
@@ -211,15 +211,21 @@ public class SecondSelection extends JFrame implements ActionListener {
 					frame.dispose();
 					MainGame mainGame = new MainGame(character, "신창섭");
 				} else if(value == 8 && character!="애용이") {
-					i = 1;
-					JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+					JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
 					frame.dispose();
-					MainGame mainGame = new MainGame(character, "애용이");
+					MainGame mainGame = new MainGame(character, "페이커");
+					i = 1;
+//					JOptionPane.showMessageDialog(null, "애용이가 선택되었습니다!");
+//					frame.dispose();
+//					MainGame mainGame = new MainGame(character, "애용이");
 				} else if(value == 9 && character!="하츄핑") {
 					i = 1;
-					JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+					JOptionPane.showMessageDialog(null, "신 창 섭이 선택되었습니다!");
 					frame.dispose();
-					MainGame mainGame = new MainGame(character, "하츄핑");
+					MainGame mainGame = new MainGame(character, "신창섭");
+//					JOptionPane.showMessageDialog(null, "하츄핑이 선택되었습니다!");
+//					frame.dispose();
+//					MainGame mainGame = new MainGame(character, "하츄핑");
 				} else if(value == 10 && character!="페이커") {
 					i = 1;
 					JOptionPane.showMessageDialog(null, "대상혁이 선택되었습니다!");
@@ -232,9 +238,12 @@ public class SecondSelection extends JFrame implements ActionListener {
 					MainGame mainGame = new MainGame(character, "백종원");
 				} else if(value == 12 && character!="스티브") {
 					i = 1;
-					JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+//					JOptionPane.showMessageDialog(null, "스티브가 선택되었습니다!");
+//					frame.dispose();
+//					MainGame mainGame = new MainGame(character, "스티브");\
+					JOptionPane.showMessageDialog(null, "백종원이 선택되었습니다!");
 					frame.dispose();
-					MainGame mainGame = new MainGame(character, "스티브");
+					MainGame mainGame = new MainGame(character, "백종원");
 				}
 			}
 		}
