@@ -7,30 +7,35 @@ import java.awt.Toolkit;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import PVP.MoveThread;
 
 public class MainGame extends JFrame implements KeyListener, Runnable {
 	public JFrame frame = new JFrame();
 	
-	public JLabel p1, p2, riceKeyP1, riceKeyP2;
+	public JLabel p1, p2, riceKeyP1, riceKeyP2, changUlt, soap, hider, bas;
+	public JLabel P1HPDisplay, P2HPDisplay;
 	
 	public boolean P1onGround;
 	public boolean P2onGround;
-	public int P1HP;
-	public int P2HP;
+	public int P1HP, P2HP, P1atk, P2atk;
 	public int monkeyStackP1, monkeyStackP2 = 0;
 	
 	public int FPS = 60;
+	public int p1UltCooldown = 0;
+	public int p2UltCooldown = 0;
 	
-	public boolean P1upPressed, P1downPressed, P1leftPressed, P1rightPressed, P1attackPressed, P1faceLeft;
-	public boolean P2upPressed, P2downPressed, P2leftPressed, P2rightPressed, P2attackPressed, P2faceLeft;
+	public boolean P1upPressed, P1downPressed, P1leftPressed, P1rightPressed, P1attackPressed, P1faceLeft, P1UltPressed;
+	public boolean P2upPressed, P2downPressed, P2leftPressed, P2rightPressed, P2attackPressed, P2faceLeft, P2UltPressed;
 	
 	public String class1, class2;
 	
@@ -43,12 +48,46 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		p2 = new JLabel();
 		riceKeyP1 = new JLabel();
 		riceKeyP2 = new JLabel();
+		changUlt = new JLabel();
+		P1HPDisplay = new JLabel();
+		P2HPDisplay = new JLabel();
+		soap = new JLabel();
+		hider = new JLabel();
+		bas = new JLabel();
 		
 		P1faceLeft = false;
 		P2faceLeft = true;
 		
 		class1 = character1;
 		class2 = character2;
+		
+		hider.setBounds(0, 0, 1800, 1020);
+		hider.setOpaque(true);
+		hider.setEnabled(true);
+		hider.setVisible(false);
+		
+		
+		P1HPDisplay.setBounds(0, 0, 300, 100);
+		P1HPDisplay.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		P1HPDisplay.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		P1HPDisplay.setForeground(Color.black); // 텍스트의 색깔을 설정한다(RGB) 
+		P1HPDisplay.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		P1HPDisplay.setOpaque(true); // 배경색을 적용시킨다.
+		P1HPDisplay.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		P1HPDisplay.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		P1HPDisplay.setEnabled(true);
+		P1HPDisplay.setVisible(true);
+		
+		P2HPDisplay.setBounds(1500, 0, 300, 100);
+		P2HPDisplay.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		P2HPDisplay.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		P2HPDisplay.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		P2HPDisplay.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		P2HPDisplay.setOpaque(true); // 배경색을 적용시킨다.
+		P2HPDisplay.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		P2HPDisplay.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		P2HPDisplay.setEnabled(true);
+		P2HPDisplay.setVisible(true);
 		
 		p1.setBounds(0, 785, 130, 200); // -235
 		p1.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
@@ -92,13 +131,118 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		riceKeyP2.setEnabled(true);
 		riceKeyP2.setVisible(false);
 		
+		bas.setBounds(0, 0, 209, 98);
+		bas.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		bas.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		bas.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		bas.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		bas.setOpaque(true); // 배경색을 적용시킨다.
+		bas.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		bas.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		bas.setEnabled(true);
+		
+		changUlt.setBounds(0, -300, 1800, 1800);
+		changUlt.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		changUlt.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		changUlt.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		changUlt.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		changUlt.setOpaque(true); // 배경색을 적용시킨다.
+		changUlt.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		changUlt.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		changUlt.setEnabled(true);
+		changUlt.setVisible(false);
+		
+		soap.setBounds(0, 0, 100, 100);
+		soap.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		soap.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
+		soap.setForeground(new Color(255, 0, 0)); // 텍스트의 색깔을 설정한다(RGB) 
+		soap.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
+		soap.setOpaque(true); // 배경색을 적용시킨다.
+		soap.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
+		soap.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
+		soap.setEnabled(true);
+		soap.setVisible(false);
+		
+		ImageIcon basImage = new ImageIcon("Bas.png");
+		bas.setIcon(basImage);
+		
+		ImageIcon soapImage = new ImageIcon("ㄱㅇ무기.png");
+		soap.setIcon(soapImage);
+		
+		ImageIcon ssalImage = new ImageIcon("쌀숭이.jpg");
+		riceKeyP1.setIcon(ssalImage);
+		riceKeyP2.setIcon(ssalImage);
+		
+		ImageIcon changUltImg = new ImageIcon("신창섭 궁.jpg");
+		changUlt.setIcon(changUltImg);
+		
 		p1.setBackground(Color.green);
 		p2.setBackground(Color.blue);
-		riceKeyP1.setBackground(Color.red);
+		bas.setBackground(Color.orange);
+		
+		
+		if(character1.equals("신창섭")) {
+			P1HP = 400;
+			P1atk = 10;
+			p1.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("신창섭캐릭터.gif");
+			p1.setIcon(imageIcon);
+		} else if(character1.equals("게이")) {
+			P1HP = 400;
+			P1atk = 10;
+			p1.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("ㄱㅇ.png");
+			p1.setIcon(imageIcon);
+		} else if(character1.equals("페이커")) {
+			P1HP = 400;
+			P1atk = 2;
+			p1.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("페이커캐릭터.png");
+			p1.setIcon(imageIcon);
+		} else if(character1.equals("백종원")) {
+			P1HP = 500;
+			P1atk = 20;
+			p1.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("백종원캐릭터.png");
+			p1.setIcon(imageIcon);
+		}
+		
+		if(character2.equals("신창섭")) {
+			P2HP = 400;
+			P2atk = 10;
+			p2.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("신창섭캐릭터.gif");
+			p2.setIcon(imageIcon);;
+		} else if(character2.equals("게이")) {
+			P2HP = 400;
+			P2atk = 10;
+			p2.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("ㄱㅇ.png");
+			p2.setIcon(imageIcon);
+		} else if(character2.equals("페이커")) {
+			P2HP = 400;
+			P2atk = 2;
+			p2.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("페이커캐릭터.png");
+			p2.setIcon(imageIcon);
+		} else if(character2.equals("백종원")) {
+			P2HP = 500;
+			P2atk = 20;
+			p2.setBackground(null);
+			ImageIcon imageIcon = new ImageIcon("백종원캐릭터.png");
+			p2.setIcon(imageIcon);
+		}
 		
 		frame.add(p1);
 		frame.add(p2);
 		frame.add(riceKeyP1);
+		frame.add(riceKeyP2);
+		frame.add(changUlt);
+		frame.add(P1HPDisplay);
+		frame.add(P2HPDisplay);
+		frame.add(soap);
+		frame.add(hider);
+		frame.add(bas);
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((screen.getWidth() - getWidth()) /2) - 900;
@@ -148,6 +292,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		if(code == KeyEvent.VK_E) {
 			P1attackPressed = true;
 		}
+		if(code == KeyEvent.VK_F) {
+			P1UltPressed = true;
+		}
 		
 		if(code == KeyEvent.VK_UP) {
 			P2upPressed = true;
@@ -165,6 +312,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		}
 		if(code == KeyEvent.VK_SHIFT) {
 			P2attackPressed = true;
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			P2UltPressed = true;
 		}
 	}
 
@@ -187,6 +337,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		if(code == KeyEvent.VK_E) {
 			P1attackPressed = false;
 		}
+		if(code == KeyEvent.VK_F) {
+			P1UltPressed = false;
+		}
 		
 		if(code == KeyEvent.VK_UP) {
 			P2upPressed = false;
@@ -203,6 +356,9 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		if(code == KeyEvent.VK_SHIFT) {
 			P2attackPressed = false;
 		}
+		if(code == KeyEvent.VK_ENTER) {
+			P2UltPressed = false;
+		}
 	}
 
 	@Override
@@ -215,6 +371,7 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 		int drawCount = 0;
 		MoveThread moveThread = new MoveThread();
 		Attack attack = new Attack();
+		int passedFrame = 0;
 		
 		while(frame != null) {
 			currentTime = System.nanoTime();
@@ -230,14 +387,33 @@ public class MainGame extends JFrame implements KeyListener, Runnable {
 			if(delta >= 1) {
 				moveThread.move(this, moveThread);
 				attack.attack(this, class1, class2, attack);
+				P1HPDisplay.setText("플레이어 1 체력: " + P1HP);
+				P2HPDisplay.setText("플레이어 2 체력: " + P2HP);
+				passedFrame++;
 				delta--;
 				drawCount++;
+				
+				if(P1HP <= 0) {
+					JOptionPane.showMessageDialog(null, "플레이어 2가 승리했습니다!");
+				} else if (P2HP <= 0) {
+					JOptionPane.showMessageDialog(null, "플레이어 1이 승리했습니다!");
+				}
 			}
 			
 			if(timer >= 1000000000) {
 //				System.out.println("FPS:" + drawCount);
 				drawCount = 0;
 				timer = 0;
+			}
+			
+			if(passedFrame == 60) {
+				if(p1UltCooldown > 0) {
+					p1UltCooldown--;
+				}
+				if(p2UltCooldown > 0) {
+					p2UltCooldown--;
+				}
+				passedFrame = 0;
 			}
 		}
 	}
