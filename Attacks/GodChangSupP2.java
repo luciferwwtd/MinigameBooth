@@ -20,8 +20,7 @@ public class GodChangSupP2 extends Thread {
 		long currentTime;
 		long timer = 0;
 		breakBoolean = true;
-		initP2faceLeft = main.P1faceLeft;
-		System.out.println("Run started");
+		initP2faceLeft = main.P2faceLeft;
 		
 		double time = 0;
 		int passedFrame = 0;
@@ -36,7 +35,6 @@ public class GodChangSupP2 extends Thread {
 		}
 		
 		while(breakBoolean == true) {
-			System.out.println(main.riceKeyP2.getX());
 			currentTime = System.nanoTime();
 			
 			delta += (currentTime - lastTime) / drawInterval;
@@ -55,9 +53,9 @@ public class GodChangSupP2 extends Thread {
 				}
 				
 				
-				if(-100 < main.riceKeyP2.getX() - main.p2.getX() && main.riceKeyP2.getX() - main.p2.getX() < 130 && -100 < main.riceKeyP2.getY() - main.p2.getY() && main.riceKeyP2.getY() - main.p2.getY() < 200) {
+				if(-100 < main.riceKeyP2.getX() - main.p1.getX() && main.riceKeyP2.getX() - main.p1.getX() < 130 && -100 < main.riceKeyP2.getY() - main.p1.getY() && main.riceKeyP2.getY() - main.p1.getY() < 200) {
 					main.riceKeyP2.setVisible(false);
-					main.P1HP -= 10;
+					main.P1HP -= main.P2atk;
 					main.monkeyStackP1 += 1;
 					breakBoolean = false;
 				}
@@ -81,7 +79,6 @@ public class GodChangSupP2 extends Thread {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Finished");
 		Attack.P2AtkPressOff();
 	}
 }
