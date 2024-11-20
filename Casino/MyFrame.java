@@ -1,60 +1,66 @@
 package Casino;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import java.awt.*;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class MyFrame extends JFrame implements ActionListener {
-	JButton button;
-	JLabel label;
-	
-	MyFrame(){
-		button = new JButton(); // 새로운 JButton 생성
-		button.setBounds(110, 100, 250, 100); // 버튼의 크기 설정
-		button.addActionListener(this); // 버튼을 클릭했을 떄 작업을 수행할 함수 연결(
-		button.setText("GAME START"); // 버튼의 텍스트 설정
-		button.setFocusable(false); // 버튼 텍스트에 있는 틀을 없앤다.
-		button.setHorizontalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수평 방향으로 버튼의 중앙(CENTER)에 정렬
-		button.setVerticalTextPosition(JButton.CENTER); // 버튼의 텍스트를 수직 방향으로 버튼의 중앙(CENTER)에 정렬
-		button.setIconTextGap(-15); // 버튼에서 텍스트와 아이콘의 간격을 설정. 음수로 설정하면 가까워지고 양수로 설정하면 멀어진다.
-		button.setForeground(Color.BLACK); // 버튼의 텍스트의 색깔을 설정한다.
-		button.setBackground(Color.WHITE); // 버튼의 색깔을 설정한다.
-		button.setBorder(BorderFactory.createEtchedBorder()); // 버튼에 태두리를 넣는다.
-		button.setEnabled(true); // 버튼을 활성화시킨다. false로 설정하면 누를 수 없는 버튼이 된다.
-		
-		JLabel label = new JLabel(); // 새로운 JLabel 생성
-		
-		label.setText("CASINO"); // 텍스트를 설정한다.
-		label.setHorizontalTextPosition(JLabel.CENTER); // 텍스트를 이미지 아이콘에 대해 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
-		label.setVerticalTextPosition(JLabel.TOP); // 텍스트를 이미지 아이콘에 대해 위(TOP), 중앙(CENTER), 아래(BOTTOM)에 정렬시킨다.
-		label.setForeground(new Color(0, 0, 255)); // 텍스트의 색깔을 설정한다(RGB) 
-		label.setIconTextGap(50); // 텍스트가 이미지 아이콘과 50만큼 떨어지게 설정한다. 음수로 설정하면 더 가까워진다.
-		label.setOpaque(true); // 배경색을 적용시킨다.
-		label.setHorizontalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 위(TOP), 아래(BOTTOM)에 정렬시킨다.
-		label.setVerticalAlignment(JLabel.CENTER); // 아이콘과 텍스트를 label의 중앙(CENTER), 왼쪽(LEFT), 오른쪽(RIGHT)에 정렬시킨다.
-		label.setBounds(110, 10, 250, 100); // Label의 위치(x, y), 크기(x, y)를 설정한다.
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(null);
-		this.setTitle("Casino Game"); // 화면의 제목을 설정한다.
-		this.setSize(500, 300);
-		this.setVisible(true);
-		this.add(button); // 화면에 button을 추가시킨다.
-		this.add(label);
-	}
-    
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==button) {
-			this.dispose();
-			SecondWindow secondWindow = new SecondWindow(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
-		}
-	}
+   
+   JFrame frame = new JFrame();
+   JButton myButton = new JButton("Start Casino Game !"); // JButton을 생성할 때 텍스트를 넣어주면 버튼의 텍스트를 간편하게 설정할 수 있다.
+   JLabel label = new JLabel(); // 새로운 JLabel 생성
+   JTextField textField = new JTextField(); // 새로운 텍스트 필드를 생성
+   
+   MyFrame() {
+      myButton.setBackground(new Color(255, 209, 255));
+      myButton.addActionListener(this);
+      myButton.setFocusable(false);
+      myButton.setFont(new Font("Georgia", Font.PLAIN, 20));
+      myButton.setBounds(300/2-130, 110/2-45, 250, 50);
+      myButton.setEnabled(true); // 버튼을 활성화시킨다.
+      
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setSize(300, 110);
+      frame.setVisible(true);
+      frame.setResizable(false);
+      frame.setTitle("카지노 게임");
+      frame.getContentPane().setBackground(new Color(255, 241, 255));
+   
+      frame.add(myButton);
+      frame.add(label); // 화면에 label을 추가시킨다.
+      
+   }
+   public static void main(String[] args) {
+        new MyFrame();
+   }
+
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      if(e.getSource()==myButton) {
+         frame.dispose(); // frame, 즉 기존의 화면은 제거한다
+         SecondWindow secondWindow = new SecondWindow(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
+      }
+   }
 }
