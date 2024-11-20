@@ -55,7 +55,7 @@ public class GodChangSupP1 extends Thread {
 				
 				if(-100 < main.riceKeyP1.getX() - main.p2.getX() && main.riceKeyP1.getX() - main.p2.getX() < 130 && -100 < main.riceKeyP1.getY() - main.p2.getY() && main.riceKeyP1.getY() - main.p2.getY() < 200) {
 					main.riceKeyP1.setVisible(false);
-					main.P2HP -= 10;
+					main.P2HP -= main.P1atk;
 					main.monkeyStackP2 += 1;
 					breakBoolean = false;
 				}
