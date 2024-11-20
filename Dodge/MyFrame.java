@@ -61,7 +61,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==button) {
 			this.dispose();
-			MainGame firstSelection = new MainGame(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
+			MainGame mainGame = new MainGame(); // SecondWindow 화면을 새로 생성해낸다.(JFrameTest에서 하던것과 같이)
 		}
 	}
 }
